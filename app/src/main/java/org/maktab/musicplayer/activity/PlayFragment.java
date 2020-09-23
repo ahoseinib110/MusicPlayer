@@ -153,8 +153,11 @@ public class PlayFragment extends Fragment {
         try {
             //AssetFileDescriptor afd = getActivity().getAssets().openFd(music.getAssetPath());
             //mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            Log.d(TAG,""+getActivity().getExternalFilesDir(null));
+            Log.d(TAG,""+getActivity().getFilesDir());
+            //Uri myUri1 = Uri.parse("/Samsung/Music/Over_the_Horizon.mp3");
             Uri myUri1 = Uri.parse("file:///sdcard/Samsung/Music/Over_the_Horizon.mp3");
-            mMediaPlayer.setDataSource(getActivity().getApplicationContext(), myUri1);
+            mMediaPlayer.setDataSource(getActivity(), myUri1);
             mMediaPlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();
