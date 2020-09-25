@@ -35,12 +35,28 @@ public class Music {
         mPath = path;
     }
 
-    public String getName() {
+    public String getTitle() {
         return mTitle;
     }
 
-    public void setName(String name) {
-        mTitle = name;
+    public void setTitle(String title) {
+        mTitle = title;
+    }
+
+    public Long getAlbumID() {
+        return mAlbumID;
+    }
+
+    public void setAlbumID(Long albumID) {
+        mAlbumID = albumID;
+    }
+
+    public Long getArtistId() {
+        return mArtistId;
+    }
+
+    public void setArtistId(Long artistId) {
+        mArtistId = artistId;
     }
 
     public String getAlbum() {

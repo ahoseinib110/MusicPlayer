@@ -12,6 +12,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import org.maktab.musicplayer.R;
+import org.maktab.musicplayer.fragment.MusicListFragment;
 import org.maktab.musicplayer.fragment.PlayFragment;
 
 public class MusicActivity extends AppCompatActivity {
@@ -46,7 +47,7 @@ public class MusicActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return PlayFragment.newInstance();
+                    return MusicListFragment.newInstance();
                 case 1:
                     return PlayFragment.newInstance();
                 case 2:

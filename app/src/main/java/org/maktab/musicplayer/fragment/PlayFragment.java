@@ -62,14 +62,8 @@ public class PlayFragment extends Fragment {
         mRepository = MusicRepository.getInstance(getContext());
         mMediaPlayer = mRepository.getMediaPlayer();
         List<Music> musicList = mRepository.getMusicList();
-
         mMusic = musicList.get(0);
         //Log.d(TAG,"assets " + mMusic.getAssetPath());
-        String s ="";
-        for (Music music : musicList) {
-            s+=(" "+ music.getName());
-        }
-        Log.d(TAG,"songs "+ s);
         init_music(musicList.get(0));
     }
 
