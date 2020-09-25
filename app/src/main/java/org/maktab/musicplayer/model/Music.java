@@ -1,46 +1,93 @@
 package org.maktab.musicplayer.model;
 
-import java.io.File;
+import android.net.Uri;
 
 public class Music {
+    String mTitle;
+    String mPath;
+    Uri mUri;
+    String mAlbum;
+    String mArtist;
+    String mDuration;
+    String mAlbumArt;
+    Long mId;
+    Long mAlbumID;
+    Long mArtistId;
 
-    private String mName;
-    private String mAssetPath;
-    private Integer mMusicId;
+
+    public Music(Uri uri,Long id,Long albumID,Long artistID,String title,String album,String artist,String path,String duration) {
+        mUri = uri;
+        mId = id;
+        mAlbumID = albumID;
+        mArtistId = artistID;
+        mTitle = title;
+        mAlbum=album;
+        mArtist = artist;
+        mPath = path;
+        mDuration = duration;
+    }
+
+    public String getPath() {
+        return mPath;
+    }
+
+    public void setPath(String path) {
+        mPath = path;
+    }
 
     public String getName() {
-        return mName;
+        return mTitle;
     }
 
     public void setName(String name) {
-        mName = name;
+        mTitle = name;
     }
 
-    public String getAssetPath() {
-        return mAssetPath;
+    public String getAlbum() {
+        return mAlbum;
     }
 
-    public void setAssetPath(String assetPath) {
-        mAssetPath = assetPath;
+    public void setAlbum(String album) {
+        mAlbum = album;
     }
 
-    public Integer getMusicId() {
-        return mMusicId;
+    public String getArtist() {
+        return mArtist;
     }
 
-    public void setMusicId(Integer musicId) {
-        mMusicId = musicId;
+    public void setArtist(String artist) {
+        mArtist = artist;
     }
 
-    public Music(String assetPath) {
-        //example: assetPath: sample_music/
-        mAssetPath = assetPath;
-        mName = extractFileName(mAssetPath);
+    public String getDuration() {
+        return mDuration;
     }
 
-    private String extractFileName(String assetPath) {
-        String[] segments = assetPath.split(File.separator);
-        String fileNameWithExt = segments[segments.length - 1];
-        return fileNameWithExt.substring(0, fileNameWithExt.lastIndexOf("."));
+    public void setDuration(String duration) {
+        mDuration = duration;
+    }
+
+    public String getAlbumArt() {
+        return mAlbumArt;
+    }
+
+    public void setAlbumArt(String albumArt) {
+        mAlbumArt = albumArt;
+    }
+
+    public Uri getUri() {
+        return mUri;
+    }
+
+    public void setUri(Uri uri) {
+        mUri = uri;
+    }
+
+    public Long getId() {
+        return mId;
+    }
+
+    public void setId(Long id) {
+        mId = id;
     }
 }

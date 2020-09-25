@@ -2,7 +2,6 @@ package org.maktab.musicplayer.fragment;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,10 +15,8 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 
 import org.maktab.musicplayer.R;
-import org.maktab.musicplayer.model.Audio;
 import org.maktab.musicplayer.model.Music;
 import org.maktab.musicplayer.repository.*;
-import org.maktab.musicplayer.utils.MusicUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -64,17 +61,16 @@ public class PlayFragment extends Fragment {
         }
         mRepository = MusicRepository.getInstance(getContext());
         mMediaPlayer = mRepository.getMediaPlayer();
-        List<Music> musics = mRepository.getMusics();
-        List<Audio> audioList = MusicUtils.getPlayList(getActivity().getApplication());
-        //mMusic = musics.get(0);
+        List<Music> musicList = mRepository.getMusicList();
+
+        mMusic = musicList.get(0);
         //Log.d(TAG,"assets " + mMusic.getAssetPath());
         String s ="";
-        for (Audio audio:audioList) {
-            //Log.d(TAG2,"audio "+audio.getPath());
-            s+=(" "+audio.getName());
+        for (Music music : musicList) {
+            s+=(" "+ music.getName());
         }
         Log.d(TAG,"songs "+ s);
-        init_music(audioList.get(0));
+        init_music(musicList.get(0));
     }
 
     @Override
@@ -140,7 +136,7 @@ public class PlayFragment extends Fragment {
         });
     }
 
-    private void init_music(Audio audio) {
+    private void init_music(Music music) {
         oneTimeOnly = 0;
         mMediaPlayer.reset();
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -149,10 +145,9 @@ public class PlayFragment extends Fragment {
             //mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             Log.d(TAG,""+getActivity().getExternalFilesDir(null));
             Log.d(TAG,""+getActivity().getFilesDir());
-            Log.d(TAG,""+audio.getUri().toString());
-            //Uri myUri1 = Uri.parse("/Samsung/Music/Over_the_Horizon.mp3");
-            Uri myUri1 = Uri.parse("file://sdcard/Music/Sorood/Takkhan_music_266311.mp3");
-            mMediaPlayer.setDataSource(getActivity(),myUri1);
+            Log.d(TAG,""+ music.getUri().toString());
+
+            mMediaPlayer.setDataSource(getActivity(), mMusic.getUri());
             mMediaPlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();
