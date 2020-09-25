@@ -1,25 +1,18 @@
-package org.maktab.musicplayer.activity;
+package org.maktab.musicplayer.fragment;
 
-import android.content.res.AssetFileDescriptor;
-import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 
 import org.maktab.musicplayer.R;
@@ -33,7 +26,8 @@ import java.util.List;
 
 
 public class PlayFragment extends Fragment {
-    public static final String TAG = "bashir_PF";
+    public static final String TAG = "bashir1_PF";
+    public static final String TAG2 = "bashir2_PF";
     private SeekBar mSeekBarMusic;
     private ImageButton mImageButtonPlay;
 
@@ -71,13 +65,13 @@ public class PlayFragment extends Fragment {
         mRepository = MusicRepository.getInstance(getContext());
         mMediaPlayer = mRepository.getMediaPlayer();
         List<Music> musics = mRepository.getMusics();
-        List<Audio> audioList = MusicUtils.getAllAudioFromDevice(getActivity().getApplication());
-        mMusic = musics.get(0);
-        Log.d(TAG,"audio "+audioList.get(0).getaPath());
-        Log.d(TAG,"assets " + mMusic.getAssetPath());
+        List<Audio> audioList = MusicUtils.getPlayList(getActivity().getApplication());
+        //mMusic = musics.get(0);
+        //Log.d(TAG,"assets " + mMusic.getAssetPath());
         String s ="";
         for (Audio audio:audioList) {
-            s+=(" "+audio.getaName());
+            //Log.d(TAG2,"audio "+audio.getPath());
+            s+=(" "+audio.getName());
         }
         Log.d(TAG,"songs "+ s);
         init_music(audioList.get(0));
@@ -155,9 +149,10 @@ public class PlayFragment extends Fragment {
             //mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             Log.d(TAG,""+getActivity().getExternalFilesDir(null));
             Log.d(TAG,""+getActivity().getFilesDir());
+            Log.d(TAG,""+audio.getUri().toString());
             //Uri myUri1 = Uri.parse("/Samsung/Music/Over_the_Horizon.mp3");
-            Uri myUri1 = Uri.parse("file:///sdcard/Samsung/Music/Over_the_Horizon.mp3");
-            mMediaPlayer.setDataSource(getActivity(), myUri1);
+            Uri myUri1 = Uri.parse("file://sdcard/Music/Sorood/Takkhan_music_266311.mp3");
+            mMediaPlayer.setDataSource(getActivity(),myUri1);
             mMediaPlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();

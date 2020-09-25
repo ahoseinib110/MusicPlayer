@@ -1,33 +1,88 @@
 package org.maktab.musicplayer.model;
 
-public class Audio {
-    String aPath;
-    String aName;
-    String aAlbum;
-    String aArtist;
+import android.net.Uri;
 
-    public String getaPath() {
-        return aPath;
+public class Audio {
+    String mPath;
+    String mName;
+    String mAlbum;
+    String mArtist;
+    String mDuration;
+    String mAlbumArt;
+    Uri mUri;
+    Long mId;
+
+    public Audio() {
     }
-    public void setaPath(String aPath) {
-        this.aPath = aPath;
+
+    public Audio(String name, String artist, Uri uri,String path) {
+        mName = name;
+        mArtist = artist;
+        mUri = uri;
+        mPath = path;
     }
-    public String getaName() {
-        return aName;
+
+    public String getPath() {
+        return mPath;
     }
-    public void setaName(String aName) {
-        this.aName = aName;
+
+    public void setPath(String path) {
+        mPath = path;
     }
-    public String getaAlbum() {
-        return aAlbum;
+
+    public String getName() {
+        return mName;
     }
-    public void setaAlbum(String aAlbum) {
-        this.aAlbum = aAlbum;
+
+    public void setName(String name) {
+        mName = name;
     }
-    public String getaArtist() {
-        return aArtist;
+
+    public String getAlbum() {
+        return mAlbum;
     }
-    public void setaArtist(String aArtist) {
-        this.aArtist = aArtist;
+
+    public void setAlbum(String album) {
+        mAlbum = album;
+    }
+
+    public String getArtist() {
+        return mArtist;
+    }
+
+    public void setArtist(String artist) {
+        mArtist = artist;
+    }
+
+    public String getDuration() {
+        return mDuration;
+    }
+
+    public void setDuration(String duration) {
+        mDuration = duration;
+    }
+
+    public String getAlbumArt() {
+        return mAlbumArt;
+    }
+
+    public void setAlbumArt(String albumArt) {
+        mAlbumArt = albumArt;
+    }
+
+    public Uri getUri() {
+        return mUri;
+    }
+
+    public void setUri(Uri uri) {
+        mUri = uri;
+    }
+
+    public Long getId() {
+        return mId;
+    }
+
+    public void setId(Long id) {
+        mId = id;
     }
 }
