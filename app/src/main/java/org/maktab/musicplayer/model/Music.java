@@ -2,10 +2,12 @@ package org.maktab.musicplayer.model;
 
 import android.net.Uri;
 
-public class Music {
+import java.io.Serializable;
+
+public class Music implements Serializable {
     String mTitle;
     String mPath;
-    Uri mUri;
+    String mUri;
     String mAlbum;
     String mArtist;
     String mDuration;
@@ -15,7 +17,7 @@ public class Music {
     Long mArtistId;
 
 
-    public Music(Uri uri,Long id,Long albumID,Long artistID,String title,String album,String artist,String path,String duration) {
+    public Music(String uri,Long id,Long albumID,Long artistID,String title,String album,String artist,String path,String duration) {
         mUri = uri;
         mId = id;
         mAlbumID = albumID;
@@ -91,11 +93,11 @@ public class Music {
         mAlbumArt = albumArt;
     }
 
-    public Uri getUri() {
+    public String getUri() {
         return mUri;
     }
 
-    public void setUri(Uri uri) {
+    public void setUri(String uri) {
         mUri = uri;
     }
 

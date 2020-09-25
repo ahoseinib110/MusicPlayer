@@ -8,14 +8,17 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 
 import org.maktab.musicplayer.R;
 import org.maktab.musicplayer.fragment.MusicListFragment;
 import org.maktab.musicplayer.fragment.PlayFragment;
+import org.maktab.musicplayer.model.Music;
 
-public class MusicActivity extends AppCompatActivity {
+public class MusicActivity extends AppCompatActivity implements MusicListFragment.CallBack {
 
     private ViewPager2 mViewPagerMusic;
     private MusicPagerAdapter mAdapter;
@@ -24,8 +27,6 @@ public class MusicActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
-        //FragmentManager fragmentManager = getSupportFragmentManager();
-        //fragmentManager.beginTransaction().add(R.id.fragment_container,new PlayFragment()).commit();
         findViews();
         mAdapter = new MusicPagerAdapter(this);
         mViewPagerMusic.setAdapter(mAdapter);
@@ -34,6 +35,7 @@ public class MusicActivity extends AppCompatActivity {
     public void findViews() {
         mViewPagerMusic = findViewById(R.id.viewPagerMusic);
     }
+
 
     public class MusicPagerAdapter extends FragmentStateAdapter {
 
@@ -49,9 +51,9 @@ public class MusicActivity extends AppCompatActivity {
                 case 0:
                     return MusicListFragment.newInstance();
                 case 1:
-                    return PlayFragment.newInstance();
+                    return MusicListFragment.newInstance();
                 case 2:
-                    return PlayFragment.newInstance();
+                    return MusicListFragment.newInstance();
             }
             return null;
         }
@@ -60,5 +62,13 @@ public class MusicActivity extends AppCompatActivity {
         public int getItemCount() {
             return 3;
         }
+    }
+
+
+    @Override
+    public void startPlayActivity(Music music) {
+        Log.d("bashir","2: "+music.getTitle());
+        Intent intent = PlayActivity.newIntent(this,music);
+        startActivity(intent);
     }
 }

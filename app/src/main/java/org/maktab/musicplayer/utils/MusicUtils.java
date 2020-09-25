@@ -39,7 +39,7 @@ public class MusicUtils {
                 String path = musicCursor.getString(pathColumn);
                 Uri uri = ContentUris.withAppendedId(musicUri, id);
                 String duration =  musicCursor.getString(durationColumn);
-                mSongList.add(new Music(uri,id,albumID,artistID,title,album,artist,path,duration));
+                mSongList.add(new Music(uri.toString(),id,albumID,artistID,title,album,artist,path,duration));
             }
             while (musicCursor.moveToNext());
         }

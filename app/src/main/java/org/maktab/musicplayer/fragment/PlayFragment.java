@@ -2,6 +2,7 @@ package org.maktab.musicplayer.fragment;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -25,6 +26,7 @@ import java.util.List;
 public class PlayFragment extends Fragment {
     public static final String TAG = "bashir1_PF";
     public static final String TAG2 = "bashir2_PF";
+    public static final String ARG_MUSIC = "argMusic";
     private SeekBar mSeekBarMusic;
     private ImageButton mImageButtonPlay;
 
@@ -38,16 +40,17 @@ public class PlayFragment extends Fragment {
 
     private Music mMusic;
 
-    private boolean isPlaying=false;
+    private boolean isPlaying = false;
 
     public PlayFragment() {
         // Required empty public constructor
     }
 
 
-    public static PlayFragment newInstance() {
+    public static PlayFragment newInstance(Music music) {
         PlayFragment fragment = new PlayFragment();
         Bundle args = new Bundle();
+        args.putSerializable(ARG_MUSIC, music);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,14 +60,13 @@ public class PlayFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         if (getArguments() != null) {
-
+            mMusic = (Music) getArguments().getSerializable(ARG_MUSIC);
         }
         mRepository = MusicRepository.getInstance(getContext());
         mMediaPlayer = mRepository.getMediaPlayer();
-        List<Music> musicList = mRepository.getMusicList();
-        mMusic = musicList.get(0);
+        //List<Music> musicList = mRepository.getMusicList();
         //Log.d(TAG,"assets " + mMusic.getAssetPath());
-        init_music(musicList.get(0));
+        init_music(mMusic);
     }
 
     @Override
@@ -85,6 +87,8 @@ public class PlayFragment extends Fragment {
         super.onDestroy();
         mRepository.getMediaPlayer().release();
     }
+
+    
 
     private void findViews(View view) {
         mSeekBarMusic = view.findViewById(R.id.seekBarL);
@@ -116,18 +120,22 @@ public class PlayFragment extends Fragment {
         mImageButtonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isPlaying){
-                    mMediaPlayer.pause();
-                    mImageButtonPlay.setImageResource(R.mipmap.play);
-                    isPlaying = false;
-                }else {
-                    mMediaPlayer.start();
-                    mHandler.postDelayed(UpdateSongTime, 100);
-                    mImageButtonPlay.setImageResource(R.mipmap.pause);
-                    isPlaying = true;
-                }
+                changePlayState();
             }
         });
+    }
+
+    private void changePlayState() {
+        if (isPlaying) {
+            mMediaPlayer.pause();
+            mImageButtonPlay.setImageResource(R.mipmap.play);
+            isPlaying = false;
+        } else {
+            mMediaPlayer.start();
+            mHandler.postDelayed(UpdateSongTime, 100);
+            mImageButtonPlay.setImageResource(R.mipmap.pause);
+            isPlaying = true;
+        }
     }
 
     private void init_music(Music music) {
@@ -137,11 +145,11 @@ public class PlayFragment extends Fragment {
         try {
             //AssetFileDescriptor afd = getActivity().getAssets().openFd(music.getAssetPath());
             //mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-            Log.d(TAG,""+getActivity().getExternalFilesDir(null));
-            Log.d(TAG,""+getActivity().getFilesDir());
-            Log.d(TAG,""+ music.getUri().toString());
+            Log.d(TAG, "" + getActivity().getExternalFilesDir(null));
+            Log.d(TAG, "" + getActivity().getFilesDir());
+            Log.d(TAG, "" + music.getUri().toString());
 
-            mMediaPlayer.setDataSource(getActivity(), mMusic.getUri());
+            mMediaPlayer.setDataSource(getActivity(), Uri.parse(mMusic.getUri()));
             mMediaPlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();
@@ -150,7 +158,7 @@ public class PlayFragment extends Fragment {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 finalTime = mMediaPlayer.getDuration();
-                Log.d(TAG,"duration: "+finalTime);
+                Log.d(TAG, "duration: " + finalTime);
                 startTime = mMediaPlayer.getCurrentPosition();
 
                 if (oneTimeOnly == 0) {
@@ -164,7 +172,7 @@ public class PlayFragment extends Fragment {
 
     private Runnable UpdateSongTime = new Runnable() {
         public void run() {
-            if(isPlaying){
+            if (isPlaying) {
                 startTime = mMediaPlayer.getCurrentPosition();
                 mSeekBarMusic.setProgress((int) startTime);
                 mHandler.postDelayed(this, 100);

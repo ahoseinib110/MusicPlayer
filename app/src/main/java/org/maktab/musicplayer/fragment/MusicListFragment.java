@@ -1,5 +1,6 @@
 package org.maktab.musicplayer.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +28,7 @@ public class MusicListFragment extends Fragment {
     private RecyclerView mRecyclerViewMusicList;
     private MusicRepository mMusicRepository;
     private MusicListAdapter mAdapter;
-
+private CallBack mCallBack;
     public static MusicListFragment newInstance() {
         MusicListFragment fragment = new MusicListFragment();
         Bundle args = new Bundle();
@@ -61,6 +63,17 @@ public class MusicListFragment extends Fragment {
         mRecyclerViewMusicList.setAdapter(mAdapter);
     }
 
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof CallBack){
+            mCallBack = (CallBack) context;
+        }else {
+
+        }
+    }
+
     public class MusicListHolder extends RecyclerView.ViewHolder {
         private Music mMusic;
         private ImageView mImageMusicCover;
@@ -91,12 +104,15 @@ public class MusicListFragment extends Fragment {
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Log.d("bashir","1: "+mMusic.getTitle());
+                    mCallBack.startPlayActivity(mMusic);
                 }
             });
         }
 
     }
+
+
 
     public class MusicListAdapter extends RecyclerView.Adapter<MusicListHolder> {
         List<Music> mMusicList;
@@ -130,5 +146,9 @@ public class MusicListFragment extends Fragment {
         public int getItemCount() {
             return mMusicList.size();
         }
+    }
+
+    public interface CallBack{
+        public void startPlayActivity(Music music);
     }
 }
