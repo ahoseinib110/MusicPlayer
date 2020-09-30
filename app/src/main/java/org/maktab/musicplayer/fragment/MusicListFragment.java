@@ -1,6 +1,10 @@
 package org.maktab.musicplayer.fragment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,21 +21,23 @@ import android.widget.TextView;
 
 import org.maktab.musicplayer.R;
 import org.maktab.musicplayer.model.Music;
-import org.maktab.musicplayer.repository.MusicRepository;
 
+import java.io.Serializable;
 import java.util.List;
 
 
 public class MusicListFragment extends Fragment {
 
+    public static final String ARG_MUSIC_LIST = "argMusicList";
     private RecyclerView mRecyclerViewMusicList;
-    private MusicRepository mMusicRepository;
     private MusicListAdapter mAdapter;
     private CallBack mCallBack;
+    private List<Music> mMusicList;
 
-    public static MusicListFragment newInstance() {
+    public static MusicListFragment newInstance(List<Music> musicList) {
         MusicListFragment fragment = new MusicListFragment();
         Bundle args = new Bundle();
+        args.putSerializable(ARG_MUSIC_LIST, (Serializable) musicList);
         fragment.setArguments(args);
         return fragment;
     }
@@ -40,8 +46,9 @@ public class MusicListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            mMusicList = (List<Music>) getArguments().getSerializable(ARG_MUSIC_LIST);
         }
-        mMusicRepository = MusicRepository.getInstance(getActivity());
+
     }
 
     @Override
@@ -59,7 +66,7 @@ public class MusicListFragment extends Fragment {
 
     private void initUI() {
         mRecyclerViewMusicList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new MusicListAdapter(mMusicRepository.getMusicList());
+        mAdapter = new MusicListAdapter(mMusicList);
         mRecyclerViewMusicList.setAdapter(mAdapter);
     }
 
@@ -83,13 +90,12 @@ public class MusicListFragment extends Fragment {
 
         public MusicListHolder(@NonNull View itemView) {
             super(itemView);
-
             findViews(itemView);
 
         }
 
         private void findViews(@NonNull View itemView) {
-            mImageMusicCover = itemView.findViewById(R.id.imageArtist);
+            mImageMusicCover = itemView.findViewById(R.id.imageMusicCover);
             mTextMusicTitle = itemView.findViewById(R.id.textMusicTitle);
             mTextMusicArtist = itemView.findViewById(R.id.textMusicArtist);
             mView = itemView.findViewById(R.id.music_row);
@@ -100,6 +106,20 @@ public class MusicListFragment extends Fragment {
             mTextMusicTitle.setText(mMusic.getTitle());
             mTextMusicArtist.setText(mMusic.getArtist());
             setOnClickListener();
+            try {
+                MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+                Log.d("bashir",mMusic.getTitle()+"  "+mMusic.getPath());
+                mmr.setDataSource(getActivity(), Uri.parse(mMusic.getUri()));
+                byte [] data = mmr.getEmbeddedPicture();
+                if (data != null){
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    mImageMusicCover.setImageBitmap(bitmap);
+                }else {
+                    mImageMusicCover.setImageDrawable(getResources().getDrawable(R.drawable.album_art));
+                }
+            }catch (Exception e){
+                //Log.d("bashir",e.getMessage());
+            }
         }
 
         private void setOnClickListener() {

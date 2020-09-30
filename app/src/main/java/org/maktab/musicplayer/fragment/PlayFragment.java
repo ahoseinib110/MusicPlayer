@@ -1,6 +1,9 @@
 package org.maktab.musicplayer.fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 
 import org.maktab.musicplayer.R;
@@ -27,7 +31,9 @@ public class PlayFragment extends Fragment {
     public static final String TAG = "bashir1_PF";
     public static final String TAG2 = "bashir2_PF";
     public static final String ARG_MUSIC = "argMusic";
+
     private SeekBar mSeekBarMusic;
+    private ImageView mImageViewAlbumArt;
     private ImageButton mImageButtonPlay;
 
     private MusicRepository mRepository;
@@ -74,8 +80,8 @@ public class PlayFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_play, container, false);
-
         findViews(view);
+        setImage(view);
         seekBarChangeListener();
         setOnClickListener();
         return view;
@@ -92,10 +98,27 @@ public class PlayFragment extends Fragment {
 
     private void findViews(View view) {
         mSeekBarMusic = view.findViewById(R.id.seekBarL);
+        mImageViewAlbumArt = view.findViewById(R.id.imageViewAlbumArt);
         mImageButtonPlay = view.findViewById(R.id.play);
 
     }
 
+    private void setImage(View view) {
+        try {
+            MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+            mmr.setDataSource(getActivity(), Uri.parse(mMusic.getUri()));
+            byte [] data = mmr.getEmbeddedPicture();
+            if (data != null){
+                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                mImageViewAlbumArt.setImageBitmap(bitmap);
+            }else {
+                mImageViewAlbumArt.setImageDrawable(getResources().getDrawable(R.drawable.album_art));
+            }
+        }catch (Exception e){
+            //Log.d("bashir",e.getMessage());
+        }
+
+    }
 
     private void seekBarChangeListener() {
         mSeekBarMusic.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

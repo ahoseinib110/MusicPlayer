@@ -45,7 +45,7 @@ public class MusicRepository {
         mMusicList = MusicUtils.getAudioList(context);
     }
 
-    public Map<Long, List<Music>> getArtistMap() {
+    public List<List<Music>> getArtistsMusicList() {
         Map<Long, List<Music>> artistsMap = new LinkedHashMap<>();
         for(Music music:mMusicList){
             if(artistsMap.containsKey(music.getArtistId())){
@@ -58,8 +58,23 @@ public class MusicRepository {
                 artistsMap.put(music.getArtistId(),musicList);
             }
         }
+        return new ArrayList<List<Music>>(artistsMap.values());
+    }
 
-        return artistsMap;
+    public List<List<Music>> getAlbumsMusicList() {
+        Map<Long, List<Music>> albumsMap = new LinkedHashMap<>();
+        for(Music music:mMusicList){
+            if(albumsMap.containsKey(music.getAlbumID())){
+                List<Music> musicList = albumsMap.get(music.getAlbumID());
+                musicList.add(music);
+                albumsMap.put(music.getAlbumID(),musicList);
+            }else {
+                List<Music> musicList = new ArrayList<>();
+                musicList.add(music);
+                albumsMap.put(music.getAlbumID(),musicList);
+            }
+        }
+        return new ArrayList<List<Music>>(albumsMap.values());
     }
 
 }

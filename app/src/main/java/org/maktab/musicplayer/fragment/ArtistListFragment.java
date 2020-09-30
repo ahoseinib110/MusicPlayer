@@ -1,6 +1,10 @@
 package org.maktab.musicplayer.fragment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,10 +23,7 @@ import org.maktab.musicplayer.R;
 import org.maktab.musicplayer.model.Music;
 import org.maktab.musicplayer.repository.MusicRepository;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public class ArtistListFragment extends Fragment {
     private RecyclerView mRecyclerViewArtistList;
@@ -44,8 +45,7 @@ public class ArtistListFragment extends Fragment {
         if (getArguments() != null) {
         }
         mMusicRepository = MusicRepository.getInstance(getActivity());
-        Map<Long, List<Music>> artistsMap = mMusicRepository.getArtistMap();
-        mArtistsMusicList = new ArrayList<List<Music>>(artistsMap.values());
+        mArtistsMusicList  = mMusicRepository.getArtistsMusicList();
         /*Map<Long, List<Music>> artistsMusic = MusicRepository.getArtistList();
         for (Map.Entry am : artistsMusic.entrySet()) {
             Log.d("bashir", "key***************************** " + am.getKey().toString());
@@ -108,6 +108,19 @@ public class ArtistListFragment extends Fragment {
             mMusicList = musicList;
             mTextArtistName.setText(mMusicList.get(0).getArtist());
             setOnClickListener();
+            try {
+                MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+                mmr.setDataSource(getActivity(), Uri.parse(mMusicList.get(0).getUri()));
+                byte [] data = mmr.getEmbeddedPicture();
+                if (data != null){
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    mImageArtist.setImageBitmap(bitmap);
+                }else {
+                    mImageArtist.setImageDrawable(getResources().getDrawable(R.drawable.album_art));
+                }
+            }catch (Exception e){
+                //Log.d("bashir",e.getMessage());
+            }
         }
 
         private void setOnClickListener() {
