@@ -14,11 +14,14 @@ import android.os.Bundle;
 import android.util.Log;
 
 import org.maktab.musicplayer.R;
+import org.maktab.musicplayer.fragment.ArtistListFragment;
 import org.maktab.musicplayer.fragment.MusicListFragment;
 import org.maktab.musicplayer.fragment.PlayFragment;
 import org.maktab.musicplayer.model.Music;
 
-public class MusicActivity extends AppCompatActivity implements MusicListFragment.CallBack {
+import java.util.List;
+
+public class MusicActivity extends AppCompatActivity implements MusicListFragment.CallBack , ArtistListFragment.CallBack {
 
     private ViewPager2 mViewPagerMusic;
     private MusicPagerAdapter mAdapter;
@@ -51,7 +54,7 @@ public class MusicActivity extends AppCompatActivity implements MusicListFragmen
                 case 0:
                     return MusicListFragment.newInstance();
                 case 1:
-                    return MusicListFragment.newInstance();
+                    return ArtistListFragment.newInstance();
                 case 2:
                     return MusicListFragment.newInstance();
             }
@@ -62,13 +65,18 @@ public class MusicActivity extends AppCompatActivity implements MusicListFragmen
         public int getItemCount() {
             return 3;
         }
-    }
 
+    }
 
     @Override
     public void startPlayActivity(Music music) {
         Log.d("bashir","2: "+music.getTitle());
         Intent intent = PlayActivity.newIntent(this,music);
         startActivity(intent);
+    }
+
+    @Override
+    public void startArtistMusicActivity(List<Music> musicList) {
+
     }
 }

@@ -20,7 +20,6 @@ import org.maktab.musicplayer.model.Music;
 import org.maktab.musicplayer.repository.MusicRepository;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 
 public class MusicListFragment extends Fragment {
@@ -28,7 +27,8 @@ public class MusicListFragment extends Fragment {
     private RecyclerView mRecyclerViewMusicList;
     private MusicRepository mMusicRepository;
     private MusicListAdapter mAdapter;
-private CallBack mCallBack;
+    private CallBack mCallBack;
+
     public static MusicListFragment newInstance() {
         MusicListFragment fragment = new MusicListFragment();
         Bundle args = new Bundle();
@@ -45,7 +45,7 @@ private CallBack mCallBack;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_music_list, container, false);
         findViews(view);
@@ -67,9 +67,9 @@ private CallBack mCallBack;
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if(context instanceof CallBack){
+        if (context instanceof CallBack) {
             mCallBack = (CallBack) context;
-        }else {
+        } else {
 
         }
     }
@@ -89,29 +89,30 @@ private CallBack mCallBack;
         }
 
         private void findViews(@NonNull View itemView) {
-            mImageMusicCover = itemView.findViewById(R.id.imageMusicCover);
+            mImageMusicCover = itemView.findViewById(R.id.imageArtist);
             mTextMusicTitle = itemView.findViewById(R.id.textMusicTitle);
             mTextMusicArtist = itemView.findViewById(R.id.textMusicArtist);
             mView = itemView.findViewById(R.id.music_row);
         }
+
         public void onBind(Music music) {
             mMusic = music;
             mTextMusicTitle.setText(mMusic.getTitle());
             mTextMusicArtist.setText(mMusic.getArtist());
             setOnClickListener();
         }
+
         private void setOnClickListener() {
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("bashir","1: "+mMusic.getTitle());
+                    Log.d("bashir", "1: " + mMusic.getTitle());
                     mCallBack.startPlayActivity(mMusic);
                 }
             });
         }
 
     }
-
 
 
     public class MusicListAdapter extends RecyclerView.Adapter<MusicListHolder> {
@@ -148,7 +149,7 @@ private CallBack mCallBack;
         }
     }
 
-    public interface CallBack{
+    public interface CallBack {
         public void startPlayActivity(Music music);
     }
 }
