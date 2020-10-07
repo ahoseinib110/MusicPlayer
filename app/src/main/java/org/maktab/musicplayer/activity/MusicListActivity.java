@@ -38,8 +38,8 @@ private  List<Music> mMusicList;
     }
 
     @Override
-    public void startPlayActivity(Music music) {
-        Intent intent = PlayActivity.newIntent(this, music);
+    public void startPlayActivity(List<Music> musicList,int musicIndex) {
+        Intent intent = PlayActivity.newIntent(this, musicList,musicIndex);
         startActivity(intent);
     }
 }

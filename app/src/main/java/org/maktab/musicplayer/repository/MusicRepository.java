@@ -1,6 +1,7 @@
 package org.maktab.musicplayer.repository;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 
 
@@ -35,13 +36,11 @@ public class MusicRepository {
         mMusicList = musicList;
     }
 
-    public MediaPlayer getMediaPlayer() {
-        return mMediaPlayer;
-    }
+
 
     private MusicRepository(Context context) {
-        mContext = context.getApplicationContext();
         mMediaPlayer = new MediaPlayer();
+        mContext = context.getApplicationContext();
         mMusicList = MusicUtils.getAudioList(context);
     }
 
@@ -75,6 +74,10 @@ public class MusicRepository {
             }
         }
         return new ArrayList<List<Music>>(albumsMap.values());
+    }
+
+    public MediaPlayer getMediaPlayer(){
+        return mMediaPlayer;
     }
 
 }

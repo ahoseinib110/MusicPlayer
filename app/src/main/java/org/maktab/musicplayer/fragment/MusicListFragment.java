@@ -82,6 +82,8 @@ public class MusicListFragment extends Fragment {
     }
 
     public class MusicListHolder extends RecyclerView.ViewHolder {
+        private List<Music> mMusicList;
+        private int mMusicIndex;
         private Music mMusic;
         private ImageView mImageMusicCover;
         private TextView mTextMusicTitle;
@@ -101,8 +103,10 @@ public class MusicListFragment extends Fragment {
             mView = itemView.findViewById(R.id.music_row);
         }
 
-        public void onBind(Music music) {
-            mMusic = music;
+        public void onBind(List<Music> musicList,int musicIndex) {
+            mMusicList = musicList;
+            mMusicIndex= musicIndex;
+            mMusic = musicList.get(musicIndex);
             mTextMusicTitle.setText(mMusic.getTitle());
             mTextMusicArtist.setText(mMusic.getArtist());
             setOnClickListener();
@@ -127,7 +131,7 @@ public class MusicListFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Log.d("bashir", "1: " + mMusic.getTitle());
-                    mCallBack.startPlayActivity(mMusic);
+                    mCallBack.startPlayActivity(mMusicList,mMusicIndex);
                 }
             });
         }
@@ -160,7 +164,7 @@ public class MusicListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MusicListHolder holder, int position) {
-            holder.onBind(mMusicList.get(position));
+            holder.onBind(mMusicList,position);
         }
 
         @Override
@@ -170,6 +174,6 @@ public class MusicListFragment extends Fragment {
     }
 
     public interface CallBack {
-        public void startPlayActivity(Music music);
+        public void startPlayActivity(List<Music> musicList,int musicIndex);
     }
 }

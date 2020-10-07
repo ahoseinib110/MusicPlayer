@@ -22,43 +22,7 @@
         tools:ignore="VectorDrawableCompat" />
 
     <TextView
-        android:id="@+id/album"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/song"
-        android:layout_marginTop="16dp"
-        android:ellipsize="marquee"
-        android:gravity="center_horizontal"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:padding="6dp"
-        android:scrollHorizontally="true"
-        android:singleLine="true"
-        android:text="Album"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/song" />
-
-    <TextView
-        android:id="@+id/artist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/album"
-        android:layout_marginTop="16dp"
-        android:ellipsize="marquee"
-        android:gravity="center_horizontal"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:padding="6dp"
-        android:scrollHorizontally="true"
-        android:singleLine="true"
-        android:text="Artist"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/album" />
-
-    <TextView
-        android:id="@+id/song"
+        android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageViewAlbumArt"
@@ -77,7 +41,43 @@
         app:layout_constraintTop_toBottomOf="@+id/imageViewAlbumArt" />
 
     <TextView
-        android:id="@+id/time_left"
+        android:id="@+id/textViewAlbum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewTitle"
+        android:layout_marginTop="16dp"
+        android:ellipsize="marquee"
+        android:gravity="center_horizontal"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="6dp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="Album"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+    <TextView
+        android:id="@+id/textViewArtist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewAlbum"
+        android:layout_marginTop="16dp"
+        android:ellipsize="marquee"
+        android:gravity="center_horizontal"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="6dp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="Artist"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAlbum" />
+
+    <TextView
+        android:id="@+id/textViewTimeLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00:00"
@@ -89,7 +89,7 @@
         app:layout_constraintTop_toTopOf="@+id/seekBarL" />
 
     <TextView
-        android:id="@+id/time_duration"
+        android:id="@+id/textViewTimeDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="05:00"
@@ -107,76 +107,76 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:layout_weight="0.87"
-        app:layout_constraintBottom_toTopOf="@+id/play"
-        app:layout_constraintEnd_toStartOf="@+id/time_duration"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewPlay"
+        app:layout_constraintEnd_toStartOf="@+id/textViewTimeDuration"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/time_left"
-        app:layout_constraintTop_toBottomOf="@+id/artist"
+        app:layout_constraintStart_toEndOf="@+id/textViewTimeLeft"
+        app:layout_constraintTop_toBottomOf="@+id/textViewArtist"
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
-        android:id="@+id/next"
+        android:id="@+id/imageViewNext"
         android:layout_width="68dp"
         android:layout_height="68dp"
         android:layout_weight="1.79"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="@+id/play"
-        app:layout_constraintEnd_toStartOf="@+id/repeat"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewPlay"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewRepeat"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/play"
-        app:layout_constraintTop_toTopOf="@+id/play"
+        app:layout_constraintStart_toEndOf="@+id/imageViewPlay"
+        app:layout_constraintTop_toTopOf="@+id/imageViewPlay"
         app:srcCompat="@mipmap/next" />
 
     <ImageButton
-        android:id="@+id/play"
+        android:id="@+id/imageViewPlay"
         android:layout_width="68dp"
         android:layout_height="68dp"
         android:layout_marginBottom="24dp"
         android:layout_weight="0.89"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/next"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewNext"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/previous"
+        app:layout_constraintStart_toEndOf="@+id/imageViewPrevious"
         app:srcCompat="@mipmap/play" />
 
     <ImageButton
-        android:id="@+id/repeat"
+        android:id="@+id/imageViewRepeat"
         android:layout_width="68dp"
         android:layout_height="68dp"
         android:layout_weight="0.36"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="@+id/next"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/next"
-        app:layout_constraintTop_toTopOf="@+id/next"
-        app:srcCompat="@mipmap/repeat" />
+        app:layout_constraintStart_toEndOf="@+id/imageViewNext"
+        app:layout_constraintTop_toTopOf="@+id/imageViewNext"
+        app:srcCompat="@drawable/ic_repeat" />
 
     <ImageButton
-        android:id="@+id/previous"
+        android:id="@+id/imageViewPrevious"
         android:layout_width="67dp"
         android:layout_height="68dp"
         android:layout_weight="1.43"
         android:background="@android:color/transparent"
         android:src="@mipmap/previous"
-        app:layout_constraintBottom_toBottomOf="@+id/play"
-        app:layout_constraintEnd_toStartOf="@+id/play"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewPlay"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewPlay"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/shuffle"
-        app:layout_constraintTop_toTopOf="@+id/play" />
+        app:layout_constraintStart_toEndOf="@+id/imageViewShuffle"
+        app:layout_constraintTop_toTopOf="@+id/imageViewPlay" />
 
     <ImageButton
-        android:id="@+id/shuffle"
+        android:id="@+id/imageViewShuffle"
         android:layout_width="67dp"
         android:layout_height="68dp"
         android:layout_weight="0.36"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="@+id/previous"
-        app:layout_constraintEnd_toStartOf="@+id/previous"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewPrevious"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewPrevious"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/previous"
-        app:srcCompat="@mipmap/shuffle" />
+        app:layout_constraintTop_toTopOf="@+id/imageViewPrevious"
+        app:srcCompat="@drawable/ic_shuffle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -93,9 +96,9 @@ public class MusicActivity extends AppCompatActivity implements MusicListFragmen
     }
 
     @Override
-    public void startPlayActivity(Music music) {
-        Log.d("bashir", "2: " + music.getTitle());
-        Intent intent = PlayActivity.newIntent(this, music);
+    public void startPlayActivity(List<Music> musicList,int musicIndex) {
+        Log.d("bashir", "2: " + musicList.get(musicIndex).getTitle());
+        Intent intent = PlayActivity.newIntent(this, musicList,musicIndex);
         startActivity(intent);
     }
 
@@ -110,5 +113,6 @@ public class MusicActivity extends AppCompatActivity implements MusicListFragmen
         Intent intent = MusicListActivity.newIntent(this, musicList);
         startActivity(intent);
     }
+
 
 }
